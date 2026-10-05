@@ -124,7 +124,8 @@ openscad_claude_skill/
 │   └── openscad-mesh-check.sh / .py      # Printability check (watertight/manifold/winding)
 ├── references/
 │   ├── language-reference.md             # Complete OpenSCAD v2021.01 cheat sheet
-│   └── reconstruction-guide.md           # Best practices for STL-to-SCAD reconstruction
+│   ├── reconstruction-guide.md           # Reconstruct mode: full workflow + best practices
+│   └── mode-replicate.md                 # Replicate mode: full image-to-CAD workflow
 ├── templates/
 │   ├── enclosure.scad                    # Parametric electronics box with lid
 │   ├── bracket.scad                      # L-bracket with countersunk holes
