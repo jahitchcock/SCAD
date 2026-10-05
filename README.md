@@ -41,6 +41,14 @@ the Claude Code skill below rather than hand-written.
 Some parts were originally authored by other Thingiverse creators and adapted/customized here —
 their original attribution/license headers are preserved at the top of the file.
 
+## License
+
+This repo's original work (the skill, docs, and parts with no third-party attribution header) is
+MIT-licensed — see [LICENSE](LICENSE). Parts adapted from other creators' Thingiverse designs
+remain under whatever that creator specified; **[LICENSE](LICENSE) lists exactly which four parts
+that applies to and what's actually stated in each** — check it before reusing those specific
+files.
+
 ## Printer
 
 Parts here are printed on a FlashForge Adventurer 5M Pro (220×220×220mm, CoreXY) via its

@@ -122,7 +122,7 @@ translate([box_x0, box_y0, box_z0])
 
 Run:
 ```bash
-"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_task1.stl "c:\Users\joshu\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
+"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_task1.stl "c:\Users\user\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
 ```
 Expected: exits 0, no errors/warnings about undefined variables, and
 `/tmp/uphc_task1.stl` is created (a single box, roughly 134×83×13mm).
@@ -161,7 +161,7 @@ difference() {
 
 Run:
 ```bash
-"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_task2.stl "c:\Users\joshu\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
+"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_task2.stl "c:\Users\user\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
 ```
 Expected: exits 0, no errors. Open in OpenSCAD (F5) and confirm visually:
 outer shell ~134mm wide × 83mm tall × 13mm deep, open at the top, pocket
@@ -171,7 +171,7 @@ opening exactly 128×7×80mm (the customizer values), bottom wall present.
 
 Run:
 ```bash
-python "c:\Users\joshu\OneDrive\3dfiles\SCAD\.claude\skills\openscad\scripts\openscad-mesh-check.py" /tmp/uphc_task2.stl
+python "c:\Users\user\OneDrive\3dfiles\SCAD\.claude\skills\openscad\scripts\openscad-mesh-check.py" /tmp/uphc_task2.stl
 ```
 Expected: reports watertight/manifold with consistent winding, no degenerate
 facets.
@@ -216,7 +216,7 @@ union() {
 
 Run:
 ```bash
-"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_task3.stl "c:\Users\joshu\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
+"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_task3.stl "c:\Users\user\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
 ```
 Expected: exits 0, no errors. Visually confirm two small tabs sit above
 `Y=65`, at the far left/right of the shell, each 4mm wide, sitting exactly
@@ -227,7 +227,7 @@ over where `openscad-projects/PhoneHolder/src/main.scad`'s solid top-corner wing
 
 Run:
 ```bash
-python "c:\Users\joshu\OneDrive\3dfiles\SCAD\.claude\skills\openscad\scripts\openscad-mesh-check.py" /tmp/uphc_task3.stl
+python "c:\Users\user\OneDrive\3dfiles\SCAD\.claude\skills\openscad\scripts\openscad-mesh-check.py" /tmp/uphc_task3.stl
 ```
 Expected: still watertight/manifold — the union must not introduce
 non-manifold edges where the hook tabs meet the shell.
@@ -276,7 +276,7 @@ union() {
 
 Run:
 ```bash
-"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_task4.stl "c:\Users\joshu\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
+"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_task4.stl "c:\Users\user\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
 ```
 Expected: exits 0, no errors. Visually confirm two thin (2mm) walls
 hugging just outside where the primary's left/right side faces would sit
@@ -287,7 +287,7 @@ below/adjacent to the hook tabs.
 
 Run:
 ```bash
-python "c:\Users\joshu\OneDrive\3dfiles\SCAD\.claude\skills\openscad\scripts\openscad-mesh-check.py" /tmp/uphc_task4.stl
+python "c:\Users\user\OneDrive\3dfiles\SCAD\.claude\skills\openscad\scripts\openscad-mesh-check.py" /tmp/uphc_task4.stl
 ```
 Expected: watertight/manifold, no degenerate facets.
 
@@ -305,11 +305,11 @@ frame:
 
 ```bash
 cat > /tmp/fit_check.scad << 'EOF'
-translate([0,0,0]) import("c:/Users/joshu/OneDrive/3dfiles/SCAD/primary_check.stl");
-translate([0,0,0]) import("c:/Users/joshu/OneDrive/3dfiles/SCAD/secondary_check.stl");
+translate([0,0,0]) import("c:/Users/user/OneDrive/3dfiles/SCAD/primary_check.stl");
+translate([0,0,0]) import("c:/Users/user/OneDrive/3dfiles/SCAD/secondary_check.stl");
 EOF
-"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/primary_check.stl "c:\Users\joshu\OneDrive\3dfiles\SCAD\PhoneHolder.scad"
-"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/secondary_check.stl "c:\Users\joshu\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
+"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/primary_check.stl "c:\Users\user\OneDrive\3dfiles\SCAD\PhoneHolder.scad"
+"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/secondary_check.stl "c:\Users\user\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
 ```
 
 - [ ] **Step 2: Open `/tmp/fit_check.scad` in the OpenSCAD GUI (F5) and visually confirm:**
@@ -347,8 +347,8 @@ repo.
 
 Run:
 ```bash
-"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_final.stl "c:\Users\joshu\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
-python "c:\Users\joshu\OneDrive\3dfiles\SCAD\.claude\skills\openscad\scripts\openscad-mesh-check.py" /tmp/uphc_final.stl
+"C:\Program Files\OpenSCAD\openscad.exe" -o /tmp/uphc_final.stl "c:\Users\user\OneDrive\3dfiles\SCAD\UnfoldedPhoneClipHolder.scad"
+python "c:\Users\user\OneDrive\3dfiles\SCAD\.claude\skills\openscad\scripts\openscad-mesh-check.py" /tmp/uphc_final.stl
 ```
 Expected: both succeed, watertight/manifold mesh, no warnings.
 

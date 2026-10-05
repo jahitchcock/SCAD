@@ -1,0 +1,46 @@
+MIT License
+
+Copyright (c) 2026 Joshua Hitchcock
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+---
+
+## Scope — read before reusing a specific part
+
+This MIT license covers this repository's **original work**: the Claude Code skill at
+`.claude/skills/openscad/` (its own scripts/templates — excluding the vendored BOSL2 library,
+which carries its own BSD-2-Clause license at
+`.claude/skills/openscad/templates/libraries/BOSL2/LICENSE`), the documentation, and the parts
+with no third-party attribution header.
+
+It does **not** cover the parts adapted from other creators' designs — those remain under
+whatever the original creator specified, stated in that file's own header comment:
+
+| Part | Original creator | Stated terms |
+|---|---|---|
+| [`customizable_U_hook_updated`](openscad-projects/customizable_U_hook_updated/src/main.scad) | Serge Payen | CC BY-NC-SA 4.0 (explicit in header) |
+| [`Customizable_Card_Box`](openscad-projects/Customizable_Card_Box/src/main.scad) | Lufton ([thing:2404395](https://www.thingiverse.com/thing:2404395)) | Not stated in header — check the Thingiverse page before reuse |
+| [`CustomizableWallPlate`](openscad-projects/CustomizableWallPlate/src/main.scad) | unattributed by name ([thing:47956](http://www.thingiverse.com/thing:47956)) | Not stated in header — check the Thingiverse page before reuse |
+| [`KeyCap`](openscad-projects/KeyCap/src/main.scad) | multiple contributors (see in-file credits) | Mixed — at least one embedded component states public domain; others unstated |
+
+"Not stated in header" means: don't assume permissive reuse. Thingiverse's default license for
+designs that don't pick one explicitly is **all-rights-reserved**, not CC. Check the linked
+Thingiverse page for the creator's actual license selection before redistributing or reusing
+those four files specifically.

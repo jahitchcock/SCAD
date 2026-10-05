@@ -22,7 +22,7 @@ files — "tests" in this plan are headless renders + mesh-integrity checks.
 
 ## Context for the engineer
 
-- This repo (`c:\Users\joshu\OneDrive\3dfiles\SCAD`) was a flat collection of standalone
+- This repo (`c:\Users\user\OneDrive\3dfiles\SCAD`) was a flat collection of standalone
   `.scad` files at the time of this plan — no build system, no shared includes between files (see
   repo `CLAUDE.md`). `TVSkirtCover.scad` went directly in the repo root at the time, not under
   `openscad-projects/`. *(Editorial note, added later: the repo has since been reorganized to one
@@ -36,7 +36,7 @@ files — "tests" in this plan are headless renders + mesh-integrity checks.
 - Mesh check script: `.claude/skills/openscad/scripts/openscad-mesh-check.py` (pure Python,
   no deps). Takes an STL path, exits 0 and prints "VERDICT: PRINTABLE" when clean.
 - All commands below assume the working directory is the repo root
-  (`c:\Users\joshu\OneDrive\3dfiles\SCAD`).
+  (`c:\Users\user\OneDrive\3dfiles\SCAD`).
 - The finger-joint approach (alternating full-thickness Z-bands, each band fully owned by one
   piece, protruding `finger_depth` into the neighboring piece's territory, with a matching
   notch removed from that piece so there's no collision) was prototyped and confirmed to
