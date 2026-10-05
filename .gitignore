@@ -1,0 +1,8 @@
+*.zip
+*.7z
+debug.log
+.claude/settings.local.json
+
+# Contains PII (pet/owner identifying info) — keep local, never commit
+DogTag.scad
+PetID_Pro.scad
