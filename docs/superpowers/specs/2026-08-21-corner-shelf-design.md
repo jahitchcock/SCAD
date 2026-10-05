@@ -1,10 +1,10 @@
-# CornerShelf.scad — Design Spec
+# openscad-projects/CornerShelf/src/main.scad — Design Spec
 
 Date: 2026-08-21
 
 ## Summary
 
-A new, standalone OpenSCAD Customizer file, `CornerShelf.scad`, generating a wall-mounted
+A new, standalone OpenSCAD Customizer file, `openscad-projects/CornerShelf/src/main.scad`, generating a wall-mounted
 corner shelf with integrated support brackets, printed as one piece with no (or minimal)
 supports.
 

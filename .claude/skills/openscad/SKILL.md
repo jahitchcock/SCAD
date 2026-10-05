@@ -681,8 +681,8 @@ needs to live outside this repo or the OpenSCAD program install.
 hand-rolling CSG for any of these — it's why it's the default now:
 
 - **Fillets/rounding**: `cuboid(size, rounding=r, edges=...)`, `round_prism()`, `fillet()` — no
-  more octahedron+minkowski chamfer trick (the pattern duplicated across `PhoneHolder.scad`,
-  `galaxyfold8Riser.scad`, etc. — see [CLAUDE.md](../../../../CLAUDE.md)). Use the trick only
+  more octahedron+minkowski chamfer trick (the pattern duplicated across `PhoneHolder`,
+  `galaxyfold8Riser`, etc. — see [CLAUDE.md](../../../../CLAUDE.md)). Use the trick only
   where a part's whole-object chamfer genuinely needs Minkowski and BOSL2 has no direct op.
 - **Attachment/anchoring**: `attach()`, `position()`, `align()`, `orient()` — snap parts together
   by named anchor points instead of hand-computed `translate()` offsets.

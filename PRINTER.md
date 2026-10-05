@@ -119,7 +119,7 @@ Notes:
 
 ## Model-specific print-profile header (implemented)
 
-Each `.scad` file in this repo carries its own short `// PRINT PROFILE` comment block — material,
+Each part's `src/main.scad` carries its own short `// PRINT PROFILE` comment block — material,
 nozzle, quality preset, infill, orientation, and any override, with the *reasoning* for each,
 specific to that part (e.g. "PETG, not PLA — sustained load on a hanging hook" or "0.25mm nozzle —
 engraved text needs to actually resolve"). It references this doc's tables rather than duplicating
@@ -128,18 +128,18 @@ to reach for PETG vs PLA, when a fine nozzle is worth the print-time cost, how o
 to layer-line shear) are documented in the "Print Profile Header" section of
 `.claude/skills/openscad/SKILL.md` — that's the source of truth; this note is just the pointer.
 
-**All 13 `.scad` files in this repo carry the header** (added Aug 2026). A few worth calling out for
-how the reasoning actually differs per part, not just templated boilerplate:
-- `PhoneHolder.scad` — structural, heavier infill; orientation section documents a real trade-off
+**All 13 parts carry the header** (added Aug 2026). A few worth calling out for how the reasoning
+actually differs per part, not just templated boilerplate:
+- `PhoneHolder` — structural, heavier infill; orientation section documents a real trade-off
   found by reading the geometry (mounting screw pull-out force runs perpendicular to layers, the
   weak axis) rather than asserting a clean answer that isn't there.
-- `customizable_U_hook_updated.scad` — orientation chosen to keep layer lines parallel to the
+- `customizable_U_hook_updated` — orientation chosen to keep layer lines parallel to the
   hanging load, not perpendicular to it; also notes wall-loop count matters more than infill
   since the load path runs along the outer curve.
-- `zadjust.scad` — orientation section explicitly flags a case where the geometry (nested
+- `zadjust` — orientation section explicitly flags a case where the geometry (nested
   `scale()`+`linear_extrude()`) was too intricate to confidently reason about from code alone, and
   says so rather than guessing.
-- `storage_box.scad` — cites the file's own existing `rotate([270,0,0])` for its enclosure piece
+- `storage_box` — cites the file's own existing `rotate([270,0,0])` for its enclosure piece
   as the already-correct answer, rather than re-deriving orientation from scratch.
 
 ## Why this doc exists / how it relates to the OpenSCAD skill

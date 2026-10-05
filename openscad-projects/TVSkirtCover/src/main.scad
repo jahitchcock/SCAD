@@ -1,5 +1,5 @@
 // ============================================================
-// TVSkirtCover.scad
+// TVSkirtCover
 // Ornate, ventilated skirt cover for a flat-screen TV used flat on a table
 // as a VTT (virtual tabletop). Skirt walls stand on the table around the
 // TV's outer footprint; a top frame caps the bezel with a screen cutout.

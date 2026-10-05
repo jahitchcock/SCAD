@@ -1,7 +1,7 @@
 // ============================================================
 // PRINT PROFILE
 // ------------------------------------------------------------
-// Material:    PETG Basic — matches PhoneHolder.scad; this part clips onto
+// Material:    PETG Basic — matches PhoneHolder; this part clips onto
 //               that holder and both should tolerate the same environment.
 // Nozzle:      0.4mm.
 // Quality:     0.20mm Standard.
@@ -9,15 +9,15 @@
 //               force), but the two corner brackets are a stress
 //               concentration, so don't drop below this without testing.
 // Orientation: print with the back face (the pocket wall that mates flush
-//               against PhoneHolder.scad's front face, i.e. low Z) flat on
+//               against PhoneHolder's front face, i.e. low Z) flat on
 //               the bed. The corner brackets' hook tabs and guide tabs then
 //               overhang forward/outward in a printable direction without
 //               support.
-// Known trade-off: hanging this off PhoneHolder.scad's top edge adds
+// Known trade-off: hanging this off PhoneHolder's top edge adds
 //               forward/downward load to that holder's own mounting
-//               screws (PhoneHolder.scad attaches via a flat back-wall
+//               screws (PhoneHolder attaches via a flat back-wall
 //               plate to a car mount arm, not a literal wall — see
-//               PhoneHolder.scad's own header comment on screw pull-out
+//               PhoneHolder's own header comment on screw pull-out
 //               orientation) — this makes that existing marginal axis
 //               worse. Not a blocker, just something to be aware of.
 // ============================================================
@@ -29,10 +29,10 @@ pocket_height = 80;    // [40:1:150]
 wall_thickness = 3;    // [1:0.5:8]
 chamfer = 1;           // [0:0.25:3]
 
-/* [Primary Holder Reference Geometry - mirrors PhoneHolder.scad, update manually if that file changes] */
-primary_width = 97;        // phone_width(87) + 2*wall_thickness(5) in PhoneHolder.scad
-primary_height = 65;       // phone_height(70) - wall_thickness(5) in PhoneHolder.scad
-primary_depth = 25;        // phone_depth(15) + 2*wall_thickness(5) in PhoneHolder.scad
+/* [Primary Holder Reference Geometry - mirrors PhoneHolder, update manually if that file changes] */
+primary_width = 97;        // phone_width(87) + 2*wall_thickness(5) in PhoneHolder
+primary_height = 65;       // phone_height(70) - wall_thickness(5) in PhoneHolder
+primary_depth = 25;        // phone_depth(15) + 2*wall_thickness(5) in PhoneHolder
 primary_wing_width = 5;    // solid margin outside the primary's pocket/screen cutouts (= its own wall_thickness)
 
 /* [front window additional width] */
@@ -121,7 +121,7 @@ back_open_z1 = box_z0 + wall_thickness + 1;
 // (Y = primary_height), extending back along the wing in Z and rising
 // hook_thickness above it. Overlaps 2mm past the box's own front face
 // (back_wall_overlap_z1) into solid material for a clean union — same
-// overlap convention PhoneHolder.scad uses for its chamfer wedges.
+// overlap convention PhoneHolder uses for its chamfer wedges.
 // Chamfered (same octahedron/minkowski trick as the rest of the model)
 // for a softened, finished look instead of sharp box edges.
 module hook_tab(x0) {

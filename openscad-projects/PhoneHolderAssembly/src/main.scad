@@ -1,5 +1,5 @@
 // ============================================================
-// ASSEMBLY — PhoneHolder.scad + UnfoldedPhoneClipHolder.scad, PARAMETRIC
+// ASSEMBLY — PhoneHolder + UnfoldedPhoneClipHolder, PARAMETRIC
 // ------------------------------------------------------------
 // Both parts' full geometry is copied in here (not `include`d) and each
 // wrapped in its own module (phone_holder / unfolded_clip_pocket) with its
@@ -21,12 +21,12 @@
 // without leaking into or colliding with the other part's.
 //
 // primary_width/height/depth/wing_width no longer need manual syncing the
-// way UnfoldedPhoneClipHolder.scad's own standalone copy does (see that
+// way UnfoldedPhoneClipHolder's own standalone copy does (see that
 // file's own header) — they're computed directly from the primary's real
 // parameters in the [Hidden] section below, since both parts now live in
 // the same file.
 //
-// Neither PhoneHolder.scad nor UnfoldedPhoneClipHolder.scad is modified by
+// Neither PhoneHolder nor UnfoldedPhoneClipHolder is modified by
 // this file — both still print standalone from their own .scad files
 // exactly as before. This file is for previewing/adjusting them together.
 // ============================================================
@@ -75,7 +75,7 @@ primary_depth = phone_depth + 2*primary_wall_thickness;
 pocket_height = primary_height - 2*primary_wall_thickness;
 
 // ============================================================
-// phone_holder — full copy of PhoneHolder.scad's geometry, parametrized.
+// phone_holder — full copy of PhoneHolder's geometry, parametrized.
 // ============================================================
 module phone_holder(
     phone_width, phone_depth, phone_height, wall_thickness, bezel,
@@ -590,7 +590,7 @@ difference(){
 } // end module phone_holder
 
 // ============================================================
-// unfolded_clip_pocket — full copy of UnfoldedPhoneClipHolder.scad's
+// unfolded_clip_pocket — full copy of UnfoldedPhoneClipHolder's
 // geometry, parametrized. primary_width/height/depth/wing_width are passed
 // in from the [Hidden] section above (computed from the primary's own
 // parameters) instead of being separately-maintained mirrored constants.

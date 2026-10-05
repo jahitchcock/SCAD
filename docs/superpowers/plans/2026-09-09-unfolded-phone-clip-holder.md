@@ -2,22 +2,22 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Create `UnfoldedPhoneClipHolder.scad` — a simple open-top pocket for
+**Goal:** Create `openscad-projects/UnfoldedPhoneClipHolder/src/main.scad` — a simple open-top pocket for
 a Galaxy Z Fold 8 held unfolded/portrait, which clips onto the unmodified
-front face of `PhoneHolder.scad` via two corner brackets (hook tab + guide
+front face of `openscad-projects/PhoneHolder/src/main.scad` via two corner brackets (hook tab + guide
 tab per side) instead of mounting to the wall itself.
 
 **Architecture:** One new, standalone `.scad` file, built in the same
-coordinate frame as `PhoneHolder.scad` (X=width, Y=insertion height,
+coordinate frame as `openscad-projects/PhoneHolder/src/main.scad` (X=width, Y=insertion height,
 Z=depth) so the two files' geometry lines up directly without translation
 math scattered everywhere. Built bottom-up in a `difference()`/`union()`
 pipeline: outer box → pocket cutout → union in two corner brackets (each a
-hook tab + guide tab). No shared includes with `PhoneHolder.scad` — its
+hook tab + guide tab). No shared includes with `openscad-projects/PhoneHolder/src/main.scad` — its
 relevant constants are duplicated as commented parameters, per this repo's
 existing convention (see `CLAUDE.md`).
 
 **Tech Stack:** OpenSCAD (`.scad`), no libraries needed (plain CSG, same
-minkowski-chamfer trick already used in `PhoneHolder.scad`). Validated with
+minkowski-chamfer trick already used in `openscad-projects/PhoneHolder/src/main.scad`). Validated with
 the OpenSCAD CLI (`C:\Program Files\OpenSCAD\openscad.exe`) and the
 project's `.claude/skills/openscad/scripts/openscad-mesh-check.py`.
 
@@ -28,7 +28,7 @@ project's `.claude/skills/openscad/scripts/openscad-mesh-check.py`.
 ### Task 1: Scaffold file — parameters and chamfer helpers
 
 **Files:**
-- Create: `UnfoldedPhoneClipHolder.scad`
+- Create: `openscad-projects/UnfoldedPhoneClipHolder/src/main.scad`
 
 - [ ] **Step 1: Write the file with parameters, chamfer helpers, and a placeholder render**
 
@@ -36,7 +36,7 @@ project's `.claude/skills/openscad/scripts/openscad-mesh-check.py`.
 // ============================================================
 // PRINT PROFILE
 // ------------------------------------------------------------
-// Material:    PETG Basic — matches PhoneHolder.scad; this part clips onto
+// Material:    PETG Basic — matches openscad-projects/PhoneHolder/src/main.scad; this part clips onto
 //               that holder and both should tolerate the same environment.
 // Nozzle:      0.4mm.
 // Quality:     0.20mm Standard.
@@ -44,13 +44,13 @@ project's `.claude/skills/openscad/scripts/openscad-mesh-check.py`.
 //               force), but the two corner brackets are a stress
 //               concentration, so don't drop below this without testing.
 // Orientation: print with the back face (the pocket wall that mates flush
-//               against PhoneHolder.scad's front face, i.e. low Z) flat on
+//               against openscad-projects/PhoneHolder/src/main.scad's front face, i.e. low Z) flat on
 //               the bed. The corner brackets' hook tabs and guide tabs then
 //               overhang forward/outward in a printable direction without
 //               support.
-// Known trade-off: hanging this off PhoneHolder.scad's top edge adds
+// Known trade-off: hanging this off openscad-projects/PhoneHolder/src/main.scad's top edge adds
 //               forward/downward load to that holder's own wall-mount
-//               screws (see PhoneHolder.scad's own header comment on screw
+//               screws (see openscad-projects/PhoneHolder/src/main.scad's own header comment on screw
 //               pull-out orientation) — this makes that existing marginal
 //               axis worse. Not a blocker, just something to be aware of.
 // ============================================================
@@ -62,10 +62,10 @@ pocket_height = 80;    // [40:1:150]
 wall_thickness = 3;    // [1:0.5:8]
 chamfer = 1;           // [0:0.25:3]
 
-/* [Primary Holder Reference Geometry - mirrors PhoneHolder.scad, update manually if that file changes] */
-primary_width = 97;        // phone_width(87) + 2*wall_thickness(5) in PhoneHolder.scad
-primary_height = 65;       // phone_height(70) - wall_thickness(5) in PhoneHolder.scad
-primary_depth = 25;        // phone_depth(15) + 2*wall_thickness(5) in PhoneHolder.scad
+/* [Primary Holder Reference Geometry - mirrors openscad-projects/PhoneHolder/src/main.scad, update manually if that file changes] */
+primary_width = 97;        // phone_width(87) + 2*wall_thickness(5) in openscad-projects/PhoneHolder/src/main.scad
+primary_height = 65;       // phone_height(70) - wall_thickness(5) in openscad-projects/PhoneHolder/src/main.scad
+primary_depth = 25;        // phone_depth(15) + 2*wall_thickness(5) in openscad-projects/PhoneHolder/src/main.scad
 primary_wing_width = 5;    // solid margin outside the primary's pocket/screen cutouts (= its own wall_thickness)
 
 /* [Clip / Hook] */
@@ -134,7 +134,7 @@ Expected: exits 0, no errors/warnings about undefined variables, and
 ### Task 2: Pocket shell (outer box + insertion pocket)
 
 **Files:**
-- Modify: `UnfoldedPhoneClipHolder.scad` (replace the Task 1 placeholder render)
+- Modify: `openscad-projects/UnfoldedPhoneClipHolder/src/main.scad` (replace the Task 1 placeholder render)
 
 - [ ] **Step 1: Replace the placeholder render with the real chamfered pocket shell**
 
@@ -181,7 +181,7 @@ facets.
 ### Task 3: Hook tabs (left + right)
 
 **Files:**
-- Modify: `UnfoldedPhoneClipHolder.scad`
+- Modify: `openscad-projects/UnfoldedPhoneClipHolder/src/main.scad`
 
 - [ ] **Step 1: Add a `hook_tab` module and instantiate it on both sides, unioned with the pocket shell**
 
@@ -190,7 +190,7 @@ facets.
 // (Y = primary_height), extending back along the wing in Z and rising
 // hook_thickness above it. Overlaps 2mm past the box's own front face
 // (back_wall_overlap_z1) into solid material for a clean union — same
-// overlap convention PhoneHolder.scad uses for its chamfer wedges.
+// overlap convention openscad-projects/PhoneHolder/src/main.scad uses for its chamfer wedges.
 module hook_tab(x0) {
     translate([x0, primary_height, primary_depth - hook_bearing_depth])
         cube([hook_tab_width, hook_thickness, hook_bearing_depth + (back_wall_overlap_z1 - primary_depth)]);
@@ -220,7 +220,7 @@ Run:
 ```
 Expected: exits 0, no errors. Visually confirm two small tabs sit above
 `Y=65`, at the far left/right of the shell, each 4mm wide, sitting exactly
-over where `PhoneHolder.scad`'s solid top-corner wings would be (X in
+over where `openscad-projects/PhoneHolder/src/main.scad`'s solid top-corner wings would be (X in
 `[0,5]` and `[92,97]` in that file's own frame).
 
 - [ ] **Step 3: Manifold check**
@@ -237,7 +237,7 @@ non-manifold edges where the hook tabs meet the shell.
 ### Task 4: Guide tabs (left + right)
 
 **Files:**
-- Modify: `UnfoldedPhoneClipHolder.scad`
+- Modify: `openscad-projects/UnfoldedPhoneClipHolder/src/main.scad`
 
 - [ ] **Step 1: Add a `guide_tab` module and instantiate it on both sides**
 
@@ -313,9 +313,9 @@ EOF
 ```
 
 - [ ] **Step 2: Open `/tmp/fit_check.scad` in the OpenSCAD GUI (F5) and visually confirm:**
-  - The secondary's hook tabs sit directly on top of `PhoneHolder.scad`'s
+  - The secondary's hook tabs sit directly on top of `openscad-projects/PhoneHolder/src/main.scad`'s
     two solid top-corner wings, not floating over the open insertion slot.
-  - The secondary's guide tabs sit just outside `PhoneHolder.scad`'s left
+  - The secondary's guide tabs sit just outside `openscad-projects/PhoneHolder/src/main.scad`'s left
     and right side faces with a visible but small gap (`guide_clearance`).
   - The secondary's back wall (its `Z = primary_depth` face) sits flush
     against the primary's front face, no gap or interpenetration.
@@ -331,7 +331,7 @@ repo.
 ### Task 6: Finalize customizer labels and header comments
 
 **Files:**
-- Modify: `UnfoldedPhoneClipHolder.scad`
+- Modify: `openscad-projects/UnfoldedPhoneClipHolder/src/main.scad`
 
 - [ ] **Step 1: Re-read the full file and confirm every top-level Customizer
   parameter (the `/* [Phone Pocket] */`, `/* [Primary Holder Reference
@@ -341,7 +341,7 @@ repo.
   from Task 1 — this step is a verification pass, not new code. If any
   parameter is missing its label/range (e.g. added later during Tasks 2-4
   without one), add it now, matching the style already used in
-  `PhoneHolder.scad`.
+  `openscad-projects/PhoneHolder/src/main.scad`.
 
 - [ ] **Step 2: Final full render + manifold check**
 

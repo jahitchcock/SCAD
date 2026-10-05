@@ -4,7 +4,7 @@ Date: 2026-09-09
 
 ## Purpose
 
-New file `TVSkirtCover.scad`: a decorative cover for a flat-screen TV used as
+New file `openscad-projects/TVSkirtCover/src/main.scad`: a decorative cover for a flat-screen TV used as
 a tabletop VTT (virtual tabletop) display, lying flat on a table with the
 screen facing up. The cover hides the TV's plastic bezel/body and dresses up
 the table edge with an ornate, ventilated skirt — while leaving the screen

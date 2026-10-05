@@ -1,7 +1,7 @@
 // Qi-charger riser for the Galaxy Fold 8.
 //
 // Standalone solid block that the phone rests on top of. It's not attached
-// to PhoneHolder.scad - it just sits on the table/charging pad and lifts
+// to PhoneHolder - it just sits on the table/charging pad and lifts
 // the phone up by block_height so the phone's Qi coil lines up with the
 // charger underneath. A thin lip traces 3 edges of the top face to keep
 // the phone from sliding off; the 4th (long) side is left open/flush.

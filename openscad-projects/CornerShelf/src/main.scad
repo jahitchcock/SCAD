@@ -1,4 +1,4 @@
-// CornerShelf.scad
+// CornerShelf
 // Parametric wall-mounted corner shelf with integrated support brackets.
 //
 // PRINT ORIENTATION: print this model exactly as generated, unrotated. The

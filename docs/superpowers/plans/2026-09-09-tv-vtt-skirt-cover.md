@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build `TVSkirtCover.scad` — a parametric, split-for-printing, ornately-vented skirt
+**Goal:** Build `openscad-projects/TVSkirtCover/src/main.scad` — a parametric, split-for-printing, ornately-vented skirt
 cover that hides a flat-screen TV's bezel/body when it's used flat on a table as a VTT.
 
 **Architecture:** One flat perimeter "ring" solid (skirt walls, vents + cable port cut in)
@@ -22,9 +22,12 @@ files — "tests" in this plan are headless renders + mesh-integrity checks.
 
 ## Context for the engineer
 
-- This repo (`c:\Users\joshu\OneDrive\3dfiles\SCAD`) is a flat collection of standalone
-  `.scad` files — no build system, no shared includes between files (see repo `CLAUDE.md`).
-  `TVSkirtCover.scad` goes directly in the repo root, not under `openscad-projects/`.
+- This repo (`c:\Users\joshu\OneDrive\3dfiles\SCAD`) was a flat collection of standalone
+  `.scad` files at the time of this plan — no build system, no shared includes between files (see
+  repo `CLAUDE.md`). `TVSkirtCover.scad` went directly in the repo root at the time, not under
+  `openscad-projects/`. *(Editorial note, added later: the repo has since been reorganized to one
+  project folder per part — this file now lives at `openscad-projects/TVSkirtCover/src/main.scad`.
+  Left as written here since it accurately records the layout at the time this plan was executed.)*
 - Full design spec: `docs/superpowers/specs/2026-09-09-tv-vtt-skirt-cover-design.md`. Read it
   before starting — this plan implements it task by task but doesn't re-derive the reasoning.
 - OpenSCAD binary: `C:\Program Files\OpenSCAD\openscad.exe` (not on `PATH`). Every render
@@ -45,13 +48,13 @@ files — "tests" in this plan are headless renders + mesh-integrity checks.
 ### Task 1: File scaffold, parameters, unit conversion, footprint
 
 **Files:**
-- Create: `TVSkirtCover.scad`
+- Create: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Write the file header and all Customizer parameters**
 
 ```openscad
 // ============================================================
-// TVSkirtCover.scad
+// openscad-projects/TVSkirtCover/src/main.scad
 // Ornate, ventilated skirt cover for a flat-screen TV used flat on a table
 // as a VTT (virtual tabletop). Skirt walls stand on the table around the
 // TV's outer footprint; a top frame caps the bezel with a screen cutout.
@@ -143,7 +146,7 @@ if (part == "debug_outline") {
 
 Run:
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_t1.stl TVSkirtCover.scad
+"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_t1.stl openscad-projects/TVSkirtCover/src/main.scad
 ```
 Expected: exits 0, no `ERROR:` lines in output, `/tmp/tvskirt_t1.stl` created.
 
@@ -165,7 +168,7 @@ session start). Skip git steps throughout this plan; just leave files saved on d
 ### Task 2: Generic finger-joint seam helper
 
 **Files:**
-- Modify: `TVSkirtCover.scad` (add modules above the `PART DISPATCH` block)
+- Modify: `openscad-projects/TVSkirtCover/src/main.scad` (add modules above the `PART DISPATCH` block)
 
 - [ ] **Step 1: Add the finger-band and seam-application modules**
 
@@ -276,7 +279,7 @@ else if (part == "debug_joint_x") {
 
 Run:
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_joint.stl TVSkirtCover.scad -D 'part="debug_joint_x"'
+"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_joint.stl openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_joint_x"'
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/tvskirt_joint.stl
 ```
 Expected: `Shells (connected parts): 2`, `VERDICT: PRINTABLE` (this exactly mirrors the
@@ -287,7 +290,7 @@ real file's module names).
 
 Run:
 ```bash
-bash .claude/skills/openscad/scripts/openscad-render.sh quick TVSkirtCover.scad -D 'part="debug_joint_x"'
+bash .claude/skills/openscad/scripts/openscad-render.sh quick openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_joint_x"'
 ```
 Read the resulting preview PNG. Confirm: piece A (blue) has small rectangular tabs poking
 into piece B's original territory pattern at alternating heights, and vice versa for piece B
@@ -298,7 +301,7 @@ into piece B's original territory pattern at alternating heights, and vice versa
 ### Task 3: Tracery arch vent motif + tiling along a wall segment
 
 **Files:**
-- Modify: `TVSkirtCover.scad`
+- Modify: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Add the 2D motif and a tiling module**
 
@@ -360,7 +363,7 @@ else if (part == "debug_vent_wall") {
 
 Run:
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_vent.stl TVSkirtCover.scad -D 'part="debug_vent_wall"'
+"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_vent.stl openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_vent_wall"'
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/tvskirt_vent.stl
 ```
 Expected: `VERDICT: PRINTABLE`, `Shells (connected parts): 1` (the wall stays one connected
@@ -376,7 +379,7 @@ user-tunable value the spec expects to be adjusted per real TV anyway.
 
 Run:
 ```bash
-bash .claude/skills/openscad/scripts/openscad-render.sh quick TVSkirtCover.scad -D 'part="debug_vent_wall"'
+bash .claude/skills/openscad/scripts/openscad-render.sh quick openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_vent_wall"'
 ```
 Read the PNG. Confirm pointed-arch cutouts with a small hole near each apex, evenly spaced,
 with a margin of empty wall at both ends of the strip.
@@ -386,7 +389,7 @@ with a margin of empty wall at both ends of the strip.
 ### Task 4: Full skirt ring (perimeter walls) with vents on all 4 sides + cable port
 
 **Files:**
-- Modify: `TVSkirtCover.scad`
+- Modify: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Add the port-slot cutout module**
 
@@ -451,7 +454,7 @@ else if (part == "debug_ring_full") {
 
 Run:
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_ring.stl TVSkirtCover.scad -D 'part="debug_ring_full"'
+"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_ring.stl openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_ring_full"'
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/tvskirt_ring.stl
 ```
 Expected: `VERDICT: PRINTABLE`, `Shells (connected parts): 1` (one continuous ring — if the
@@ -462,7 +465,7 @@ changing corner geometry).
 - [ ] **Step 4: Visual check**
 
 ```bash
-bash .claude/skills/openscad/scripts/openscad-render.sh preview TVSkirtCover.scad -D 'part="debug_ring_full"'
+bash .claude/skills/openscad/scripts/openscad-render.sh preview openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_ring_full"'
 ```
 Read all 4 preview images. Confirm: a rectangular tube standing `skirt_height` tall, vents
 tiled on all 4 sides, one rectangular port slot visible on the configured edge (default
@@ -473,7 +476,7 @@ tiled on all 4 sides, one rectangular port slot visible on the configured edge (
 ### Task 5: Top frame (bezel cap with screen cutout)
 
 **Files:**
-- Modify: `TVSkirtCover.scad`
+- Modify: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Add the frame module**
 
@@ -503,7 +506,7 @@ else if (part == "debug_frame_full") {
 - [ ] **Step 3: Render and check**
 
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_frame.stl TVSkirtCover.scad -D 'part="debug_frame_full"'
+"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_frame.stl openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_frame_full"'
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/tvskirt_frame.stl
 ```
 Expected: `VERDICT: PRINTABLE`, bounding box X/Y = `footprint_width` × `footprint_height`,
@@ -514,7 +517,7 @@ Z = `wall_thickness`.
 ### Task 6: Segmentation planner (cut coordinates for walls and frame legs)
 
 **Files:**
-- Modify: `TVSkirtCover.scad`
+- Modify: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Add a segmentation function**
 
@@ -553,7 +556,7 @@ else if (part == "debug_segments") {
 
 Run:
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/tvskirt_seg.echo TVSkirtCover.scad -D 'part="debug_segments"' 2>&1 | grep ECHO
+"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/tvskirt_seg.echo openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_segments"' 2>&1 | grep ECHO
 ```
 Expected (with default footprint ≈ 967mm × 556mm, `build_x=build_y=220`, `max_len=210`,
 `vent_pitch=30`): both lines print non-empty lists of increasing coordinates, each strictly
@@ -572,7 +575,7 @@ part option. (Keep `segment_cuts()` itself; only remove the `else if` branch add
 ### Task 7: Real skirt wall pieces wired into the part selector
 
 **Files:**
-- Modify: `TVSkirtCover.scad`
+- Modify: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Add a module that clips `skirt_ring_full()` to one X-range or Y-range and
 applies seams on whichever internal cut boundaries bound it**
@@ -705,7 +708,7 @@ volume**
 
 ```bash
 for p in wall_front_0 wall_front_1 wall_back_0 wall_back_1 wall_left_0 wall_left_1 wall_right_0 wall_right_1; do
-  "/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o "/tmp/tvskirt_$p.stl" TVSkirtCover.scad -D "part=\"$p\"" 2>&1 | grep -i error
+  "/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o "/tmp/tvskirt_$p.stl" openscad-projects/TVSkirtCover/src/main.scad -D "part=\"$p\"" 2>&1 | grep -i error
   echo "=== $p ==="
   python .claude/skills/openscad/scripts/openscad-mesh-check.py "/tmp/tvskirt_$p.stl"
 done
@@ -723,7 +726,7 @@ else if (part == "debug_assembled_front") {
 }
 ```
 ```bash
-bash .claude/skills/openscad/scripts/openscad-render.sh quick TVSkirtCover.scad -D 'part="debug_assembled_front"'
+bash .claude/skills/openscad/scripts/openscad-render.sh quick openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_assembled_front"'
 ```
 Read the PNG. Confirm the two segments' seam interlocks with no visible gap or overlap
 artifact (both pieces rendered at their true world positions — this only works because
@@ -736,7 +739,7 @@ confirmed — it's a one-off visual check, not a shipped part option.
 ### Task 8: Real top-frame leg pieces + corner pieces
 
 **Files:**
-- Modify: `TVSkirtCover.scad`
+- Modify: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Add corner-aware frame clipping, mirroring Task 7's wall approach**
 
@@ -875,7 +878,7 @@ in-use dimensions, same caveat as Task 7 Step 3) and matching dispatch branches,
 
 ```bash
 for p in frame_top_0 frame_bottom_0 frame_left_0 frame_right_0; do
-  "/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o "/tmp/tvskirt_$p.stl" TVSkirtCover.scad -D "part=\"$p\"" 2>&1 | grep -i error
+  "/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o "/tmp/tvskirt_$p.stl" openscad-projects/TVSkirtCover/src/main.scad -D "part=\"$p\"" 2>&1 | grep -i error
   echo "=== $p ==="
   python .claude/skills/openscad/scripts/openscad-mesh-check.py "/tmp/tvskirt_$p.stl"
 done
@@ -893,7 +896,7 @@ else if (part == "debug_frame_assembled") {
 }
 ```
 ```bash
-bash .claude/skills/openscad/scripts/openscad-render.sh quick TVSkirtCover.scad -D 'part="debug_frame_assembled"'
+bash .claude/skills/openscad/scripts/openscad-render.sh quick openscad-projects/TVSkirtCover/src/main.scad -D 'part="debug_frame_assembled"'
 ```
 Read the PNG from the top view. Confirm the 4 colors tile the full frame with no visible gap
 and no double-covered (visually darker/overlapping) region at the corners. Remove this debug
@@ -904,7 +907,7 @@ branch once confirmed.
 ### Task 9: `all_layout` grid preview
 
 **Files:**
-- Modify: `TVSkirtCover.scad`
+- Modify: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Add a simple row-based layout that places every real piece's 2D footprint
 within repeated `build_x` × `build_y` tiles side by side (a visual sanity check only, not a
@@ -992,7 +995,7 @@ Add `"all_layout"` to the `part` dropdown comment list.
 - [ ] **Step 3: Render and confirm it's a flat 2D-footprint sanity view, not a real print file**
 
 ```bash
-bash .claude/skills/openscad/scripts/openscad-render.sh quick TVSkirtCover.scad -D 'part="all_layout"'
+bash .claude/skills/openscad/scripts/openscad-render.sh quick openscad-projects/TVSkirtCover/src/main.scad -D 'part="all_layout"'
 ```
 Read the PNG. Confirm one row per piece, each row's width roughly matching the corresponding
 real piece's own length (front/back/frame_top/frame_bottom rows noticeably longer than
@@ -1004,12 +1007,12 @@ piece row wider than `build_x`.
 ### Task 10: Final validation pass
 
 **Files:**
-- Read-only verification of: `TVSkirtCover.scad`
+- Read-only verification of: `openscad-projects/TVSkirtCover/src/main.scad`
 
 - [ ] **Step 1: Run the strict validator**
 
 ```bash
-bash .claude/skills/openscad/scripts/openscad-validate.sh TVSkirtCover.scad
+bash .claude/skills/openscad/scripts/openscad-validate.sh openscad-projects/TVSkirtCover/src/main.scad
 ```
 Expected: `Category: OK`. If not `OK`, read the reported category/line and fix before
 continuing — this is a report, not a gate, so a non-OK result must be treated as a real
@@ -1018,8 +1021,8 @@ blocker even though the script itself exits 0.
 - [ ] **Step 2: Run Analyze mode on one representative wall piece and one frame piece**
 
 ```bash
-bash .claude/skills/openscad/scripts/openscad-render.sh analyze TVSkirtCover.scad -D 'part="wall_front_0"'
-bash .claude/skills/openscad/scripts/openscad-render.sh analyze TVSkirtCover.scad -D 'part="frame_top_0"'
+bash .claude/skills/openscad/scripts/openscad-render.sh analyze openscad-projects/TVSkirtCover/src/main.scad -D 'part="wall_front_0"'
+bash .claude/skills/openscad/scripts/openscad-render.sh analyze openscad-projects/TVSkirtCover/src/main.scad -D 'part="frame_top_0"'
 ```
 Read both reports: bounding box within the configured build volume, watertight/manifold/
 consistent-winding/no-degenerate-facets all passing, no concerning overhangs in the
@@ -1041,7 +1044,7 @@ Run every real part once more with a much smaller screen to confirm the segmenta
 degrades correctly to zero cuts when a wall fits the plate in one piece:
 
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_small.stl TVSkirtCover.scad \
+"/c/Program Files/OpenSCAD/openscad.exe" --export-format=binstl -o /tmp/tvskirt_small.stl openscad-projects/TVSkirtCover/src/main.scad \
   -D 'part="wall_front_0"' -D 'screen_width_in=20' -D 'screen_height_in=12'
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/tvskirt_small.stl
 ```

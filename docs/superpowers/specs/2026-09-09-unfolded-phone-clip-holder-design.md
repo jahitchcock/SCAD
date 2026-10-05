@@ -4,12 +4,12 @@ Date: 2026-09-09
 
 ## Purpose
 
-`PhoneHolder.scad` holds a Galaxy Z Fold 8 in its **folded** (portfolio) orientation,
+`openscad-projects/PhoneHolder/src/main.scad` holds a Galaxy Z Fold 8 in its **folded** (portfolio) orientation,
 mounted via 4 screws through its back wall to a flat plate on a car mount arm
 (not a literal wall — despite "wall-mount" terminology used loosely
 throughout this doc for the screw/pull-out geometry, which is identical
 either way). This spec covers a second, new file —
-`UnfoldedPhoneClipHolder.scad` — that holds the same phone **unfolded, in
+`openscad-projects/UnfoldedPhoneClipHolder/src/main.scad` — that holds the same phone **unfolded, in
 portrait**, and clips onto the front (screen-cutout side) of the
 already-mounted primary holder instead of attaching to the car mount arm
 itself.
@@ -17,7 +17,7 @@ itself.
 ## Requirements
 
 - Pocket opening for the unfolded phone: 128mm wide × 7mm deep × 80mm tall
-  (same axis convention as `PhoneHolder.scad`: width = X, depth/thickness =
+  (same axis convention as `openscad-projects/PhoneHolder/src/main.scad`: width = X, depth/thickness =
   Z, insertion height = Y).
 - **Correction after first build:** a fully closed pocket (solid front +
   back walls, as originally specced) has two problems — it covers the
@@ -38,7 +38,7 @@ itself.
   and stop it sliding out.
 - Clips onto the **front face** (screen-cutout side, the outward-facing side
   away from the car mount arm) of the primary holder.
-- Does **not** modify `PhoneHolder.scad` — clips onto its existing,
+- Does **not** modify `openscad-projects/PhoneHolder/src/main.scad` — clips onto its existing,
   unmodified geometry.
 - Attachment carries the unfolded phone's weight via a **positive bearing
   hook** over the primary's top edge, not friction/spring-clip alone (PETG
@@ -48,7 +48,7 @@ itself.
 
 ## Primary holder reference geometry (mirrored, not shared)
 
-`PhoneHolder.scad` has no `module` wrapper around its top-level CSG, so it
+`openscad-projects/PhoneHolder/src/main.scad` has no `module` wrapper around its top-level CSG, so it
 can't be `use <>`d without dragging in its whole render — these values are
 duplicated as commented constants instead, consistent with this repo's
 existing "no shared includes" pattern:
@@ -64,20 +64,20 @@ existing "no shared includes" pattern:
   spec:** the top edge is mostly *open* — that's the phone insertion slot,
   and the screen cutout also passes through it — solid material exists only
   in two ~5mm-wide corner "wings" (`X` in `[0, 5]` and `[92, 97]`), which is
-  exactly `wall_thickness` in `PhoneHolder.scad` (the pocket and screen
+  exactly `wall_thickness` in `openscad-projects/PhoneHolder/src/main.scad` (the pocket and screen
   cutouts are both inset by `wall_thickness` from the outer box edges, so
   the leftover margin equals it). A hook spanning the full width would rest
   over open space in the middle. The corrected design below anchors only on
   these two wings.
 
-If `PhoneHolder.scad`'s dimensions ever change, these three constants need
+If `openscad-projects/PhoneHolder/src/main.scad`'s dimensions ever change, these three constants need
 manual updating — there is no automated link between the two files.
 
-## New file: `UnfoldedPhoneClipHolder.scad`
+## New file: `openscad-projects/UnfoldedPhoneClipHolder/src/main.scad`
 
 ### Pocket / shell
 
-Built the same way as `PhoneHolder.scad`'s pocket (chamfered outer box,
+Built the same way as `openscad-projects/PhoneHolder/src/main.scad`'s pocket (chamfered outer box,
 inner pocket cut via `difference()`, top open for slide-in insertion,
 bottom wall present to stop the phone):
 
@@ -85,7 +85,7 @@ bottom wall present to stop the phone):
 - `wall_thickness = 3` (thinner than the primary's 5mm — this part is only
   7mm deep before walls and carries no screw-boss loads)
 - `chamfer = 1`, using the same octahedron/minkowski chamfered-cube trick as
-  `PhoneHolder.scad` (duplicated locally, per repo convention)
+  `openscad-projects/PhoneHolder/src/main.scad` (duplicated locally, per repo convention)
 - Outer box: `pocket_width + 2*wall_thickness` (134) wide ×
   `pocket_height + wall_thickness` (83, bottom wall + full open top) tall ×
   `pocket_depth + 2*wall_thickness` (13) deep
@@ -196,7 +196,7 @@ Each bracket has two parts:
   - `guide_clearance = 0.3` (mm gap, slip fit — not a snap)
 - Both tabs overlap 2mm into the secondary's own back wall where they
   connect, to avoid coincident-face render artifacts (same overlap
-  convention `PhoneHolder.scad` already uses for its chamfer wedges, e.g.
+  convention `openscad-projects/PhoneHolder/src/main.scad` already uses for its chamfer wedges, e.g.
   `cooling_vent_L`'s leg-to-main overlap).
 - Secondary is centered over the primary in X:
   `offset_x = ((pocket_width + 2*wall_thickness) - primary_width) / 2`
@@ -212,7 +212,7 @@ pocket_height = 80;
 wall_thickness = 3;
 chamfer = 1;
 
-/* [Primary Holder Reference Geometry - mirrors PhoneHolder.scad, update manually if that file changes] */
+/* [Primary Holder Reference Geometry - mirrors openscad-projects/PhoneHolder/src/main.scad, update manually if that file changes] */
 primary_width = 97;
 primary_height = 65;
 primary_depth = 25;
@@ -238,12 +238,12 @@ to the primary holder, which is itself only mounted by 4 screws through its
 back wall to a car mount arm's flat plate — this increases pull-out torque
 on those screws beyond what the primary's own header comment already flags
 as a marginal axis. Document this in the new file's header, same style as
-`PhoneHolder.scad`'s existing print-profile comment block. Not a blocker,
+`openscad-projects/PhoneHolder/src/main.scad`'s existing print-profile comment block. Not a blocker,
 just a known limitation to be aware of.
 
 ## Out of scope
 
 - No charger cutout, no screen cutout on the secondary.
-- No modification to `PhoneHolder.scad`.
+- No modification to `openscad-projects/PhoneHolder/src/main.scad`.
 - No shared/included geometry between the two files (matches existing repo
   convention).

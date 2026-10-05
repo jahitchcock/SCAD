@@ -1,8 +1,8 @@
-# CornerShelf.scad Implementation Plan
+# openscad-projects/CornerShelf/src/main.scad Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Create `CornerShelf.scad`, a Customizer-driven, single-file parametric corner shelf with integrated, print-support-free brackets, per `docs/superpowers/specs/2026-08-21-corner-shelf-design.md`.
+**Goal:** Create `openscad-projects/CornerShelf/src/main.scad`, a Customizer-driven, single-file parametric corner shelf with integrated, print-support-free brackets, per `docs/superpowers/specs/2026-08-21-corner-shelf-design.md`.
 
 **Architecture:** One self-contained `.scad` file. A 2D outline function builds the corner-plate shape (two straight wall edges + a circular-arc front edge whose included angle is `Arc_Degrees`), extruded via BOSL2's `rounded_prism()`. A second function builds a 2D bracket cross-section per style (Simple/Reinforced/Ornate), extruded and rotated into place under each enabled wall arm, with a drilled+countersunk screw hole. Both are combined in `corner_shelf()`, which is the file's root statement.
 
@@ -28,7 +28,7 @@ Hidden/derived: `arc_segs`, `ornate_segs`, `safety_margin`, `bracket_overlap`, `
 ### Task 1: Scaffold, Customizer parameters, and the shelf plate
 
 **Files:**
-- Create: `CornerShelf.scad`
+- Create: `openscad-projects/CornerShelf/src/main.scad`
 
 - [ ] **Step 1: Write the file scaffold, parameters, and shelf-plate geometry**
 
@@ -125,7 +125,7 @@ shelf_plate();
 
 Run (from the repo root):
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_step1.stl CornerShelf.scad
+"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_step1.stl openscad-projects/CornerShelf/src/main.scad
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/shelf_step1.stl
 ```
 Expected: OpenSCAD exits 0 and writes the STL; the mesh-check reports watertight/manifold/consistent-winding with no degenerate facets.
@@ -133,9 +133,9 @@ Expected: OpenSCAD exits 0 and writes the STL; the mesh-check reports watertight
 - [ ] **Step 3: Repeat the render+check for the two arc extremes**
 
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_concave.stl CornerShelf.scad -D "Arc_Degrees=-45"
+"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_concave.stl openscad-projects/CornerShelf/src/main.scad -D "Arc_Degrees=-45"
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/shelf_concave.stl
-"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_convex.stl CornerShelf.scad -D "Arc_Degrees=45"
+"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_convex.stl openscad-projects/CornerShelf/src/main.scad -D "Arc_Degrees=45"
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/shelf_convex.stl
 ```
 Expected: both pass mesh-check. Visually, `-45` should bow the front edge in toward the corner; `45` should bow it outward. If either fails to render or fails mesh-check, the bug is in `_arc_points` (check the sign convention or the `da` short-path correction) — do not proceed to Task 2 until this passes.
@@ -145,7 +145,7 @@ Expected: both pass mesh-check. Visually, `-45` should bow the front edge in tow
 ### Task 2: Bracket geometry and full assembly
 
 **Files:**
-- Modify: `CornerShelf.scad` (append bracket functions/modules; replace the trailing `shelf_plate();` call with `corner_shelf();`)
+- Modify: `openscad-projects/CornerShelf/src/main.scad` (append bracket functions/modules; replace the trailing `shelf_plate();` call with `corner_shelf();`)
 
 - [ ] **Step 1: Add the bracket profile, hole placement, and bracket module**
 
@@ -223,7 +223,7 @@ corner_shelf();
 - [ ] **Step 3: Render and mesh-check the default configuration**
 
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_both.stl CornerShelf.scad
+"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_both.stl openscad-projects/CornerShelf/src/main.scad
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/shelf_both.stl
 ```
 Expected: watertight/manifold pass. Visually: a Reinforced-style gusset under both arms, near but not at each arm's outer tip.
@@ -232,7 +232,7 @@ Expected: watertight/manifold pass. Visually: a Reinforced-style gusset under bo
 
 ```bash
 for style in Simple Reinforced Ornate; do
-  "/c/Program Files/OpenSCAD/openscad.exe" -o "/tmp/shelf_$style.stl" CornerShelf.scad -D "Bracket_Style=\"$style\""
+  "/c/Program Files/OpenSCAD/openscad.exe" -o "/tmp/shelf_$style.stl" openscad-projects/CornerShelf/src/main.scad -D "Bracket_Style=\"$style\""
   python .claude/skills/openscad/scripts/openscad-mesh-check.py "/tmp/shelf_$style.stl"
 done
 ```
@@ -242,7 +242,7 @@ Expected: all three pass. If `Ornate` fails manifold-check, the likely cause is 
 
 ```bash
 for side in L R Both; do
-  "/c/Program Files/OpenSCAD/openscad.exe" -o "/tmp/shelf_side_$side.stl" CornerShelf.scad -D "Bracket_Side=\"$side\""
+  "/c/Program Files/OpenSCAD/openscad.exe" -o "/tmp/shelf_side_$side.stl" openscad-projects/CornerShelf/src/main.scad -D "Bracket_Side=\"$side\""
   python .claude/skills/openscad/scripts/openscad-mesh-check.py "/tmp/shelf_side_$side.stl"
 done
 ```
@@ -251,7 +251,7 @@ Expected: `L` has a bracket only under the +Y arm, `R` only under the +X arm, bo
 - [ ] **Step 6: Render and mesh-check with the countersink disabled**
 
 ```bash
-"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_nocs.stl CornerShelf.scad -D "Countersink=false"
+"/c/Program Files/OpenSCAD/openscad.exe" -o /tmp/shelf_nocs.stl openscad-projects/CornerShelf/src/main.scad -D "Countersink=false"
 python .claude/skills/openscad/scripts/openscad-mesh-check.py /tmp/shelf_nocs.stl
 ```
 Expected: pass, screw hole present with no countersink cone.
@@ -261,14 +261,14 @@ Expected: pass, screw hole present with no countersink cone.
 ### Task 3: Header documentation and final verification sweep
 
 **Files:**
-- Modify: `CornerShelf.scad` (prepend header comment block)
+- Modify: `openscad-projects/CornerShelf/src/main.scad` (prepend header comment block)
 
 - [ ] **Step 1: Prepend the header comment block**
 
 Insert as the very first lines of the file, before `include <BOSL2/std.scad>`:
 
 ```openscad
-// CornerShelf.scad
+// openscad-projects/CornerShelf/src/main.scad
 // Parametric wall-mounted corner shelf with integrated support brackets.
 //
 // PRINT ORIENTATION: print this model exactly as generated, unrotated. The
@@ -308,7 +308,7 @@ declare -a cases=(
 i=0
 for c in "${cases[@]}"; do
   i=$((i+1))
-  eval "\"/c/Program Files/OpenSCAD/openscad.exe\" -o /tmp/shelf_final_$i.stl CornerShelf.scad $c"
+  eval "\"/c/Program Files/OpenSCAD/openscad.exe\" -o /tmp/shelf_final_$i.stl openscad-projects/CornerShelf/src/main.scad $c"
   python .claude/skills/openscad/scripts/openscad-mesh-check.py "/tmp/shelf_final_$i.stl"
 done
 ```
@@ -316,7 +316,7 @@ Expected: all 9 cases render without error and pass mesh-check, including the sm
 
 - [ ] **Step 3: Spec-compliance pass**
 
-Re-read `docs/superpowers/specs/2026-08-21-corner-shelf-design.md` section by section and confirm each requirement is met in the final `CornerShelf.scad`:
+Re-read `docs/superpowers/specs/2026-08-21-corner-shelf-design.md` section by section and confirm each requirement is met in the final `openscad-projects/CornerShelf/src/main.scad`:
 - Arc sign convention (0/negative/positive) matches.
 - All three bracket styles present and visually distinct in a preview.
 - `Bracket_Side` L/R/Both all work.
@@ -324,4 +324,4 @@ Re-read `docs/superpowers/specs/2026-08-21-corner-shelf-design.md` section by se
 - No lip/rim, no multi-bracket-per-arm, no keyhole/adhesive options (confirm none were accidentally added).
 - Header comment documents print orientation and the bracket-placement approximation limitation.
 
-If any requirement is missing or diverges, fix it in `CornerShelf.scad` and re-run Step 2 for the affected cases before considering Task 3 done.
+If any requirement is missing or diverges, fix it in `openscad-projects/CornerShelf/src/main.scad` and re-run Step 2 for the affected cases before considering Task 3 done.

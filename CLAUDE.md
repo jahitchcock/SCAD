@@ -4,15 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository overview
 
-This is a flat collection of standalone [OpenSCAD](https://openscad.org/) (`.scad`) files for 3D-printable
-parts. There is no build system, package manager, or test suite — each `.scad` file is a self-contained,
-independently parametric design. Files are unrelated to each other except where one explicitly `use <...>`s
-another module (rare; see `CustomizableWallPlate.scad`, which pulls in `MCAD/boxes.scad`).
+This is a collection of standalone [OpenSCAD](https://openscad.org/) (`.scad`) files for
+3D-printable parts, one project folder per part under `openscad-projects/<PartName>/` (source at
+`src/main.scad`, any exported mesh at `output/`, renders at `previews/`). There is no build
+system, package manager, or test suite — each part is a self-contained, independently parametric
+design. Parts are unrelated to each other except where one explicitly `use <...>`s another module
+(rare; see `openscad-projects/CustomizableWallPlate/src/main.scad`, which pulls in
+`MCAD/boxes.scad`).
 
-Several files were originally authored by other Thingiverse creators and adapted/customized here (their
-original attribution/license headers are preserved at the top of the file — keep those headers intact when
-editing). Files without attribution headers (e.g. `FastChargeRiser.scad`, `galaxyfold8Riser.scad`,
-`PhoneHolder.scad`) are original designs for this user.
+Several parts were originally authored by other Thingiverse creators and adapted/customized here
+(their original attribution/license headers are preserved at the top of the file — keep those
+headers intact when editing). Parts without attribution headers (e.g. `FastChargeRiser`,
+`galaxyfold8Riser`, `PhoneHolder`) are original designs for this user.
 
 ## Working with this codebase
 
@@ -31,14 +34,14 @@ editing). Files without attribution headers (e.g. `FastChargeRiser.scad`, `galax
   convention so it renders correctly in Customizer/Thingiverse.
 - **`/* [Hidden] */` section**: A conventional marker (used in several files) for derived/internal variables
   that should be computed from the user-facing parameters but not exposed in the Customizer UI.
-- **Common geometry patterns** reused across files (not shared via `include`/`use`, so duplicated per-file —
+- **Common geometry patterns** reused across parts (not shared via `include`/`use`, so duplicated per-file —
   when editing one, don't assume a fix propagates elsewhere):
   - `octahedron(r)` + `minkowski()` with a cube is the standard trick used for chamfering all 12 edges of a
-    box (see `PhoneHolder.scad`, `galaxyfold8Riser.scad`). This predates BOSL2 being available in this repo —
+    box (see `PhoneHolder`, `galaxyfold8Riser`). This predates BOSL2 being available in this repo —
     for **new** work, prefer BOSL2's `cuboid(..., rounding=r)` / `round_prism()` / `fillet()` instead (see
     OpenSCAD skill section below); only reach for the minkowski trick where BOSL2 has no direct equivalent.
   - Large oversized cutting solids (extended a couple mm past the target geometry) subtracted via
-    `difference()` are used for planar slopes and clean boolean cuts (see `FastChargeRiser.scad`).
+    `difference()` are used for planar slopes and clean boolean cuts (see `FastChargeRiser`).
   - `$fa` / `$fs` (or `$fn`) are set per-file to control curve smoothness; check the top of the file before
     changing circle/cylinder resolution.
 - **Units**: All dimensions are millimeters.
@@ -47,16 +50,20 @@ editing). Files without attribution headers (e.g. `FastChargeRiser.scad`, `galax
   paths pulled from the installed slicer's own profiles — notably, the slicer's build-plate coordinate
   frame is **center-origin** (X/Y run -110 to +110), not corner-origin like most `.scad` files in this
   repo build from; don't conflate the two frames when checking a design against the build volume.
-- **File naming**: **no generic/unhelpful names** — every file should be named for what it actually generates
-  (`KeyCap.scad`, not `customizer.scad`; `StaplerTop.scad`, not `stapler_customizer.scad`), not for its origin, a
-  leftover download name, or a vague catch-all/suffix. Rename on sight if a file's name doesn't say what it
-  makes. No duplicate/`(N)`-suffixed files either — as of
-  Aug 2026 there are none; a prior pass resolved the two that existed (`drawer_organizer (1).scad`'s content,
-  confirmed functionally identical to the original's geometry modules with a cleaner Customizer dispatcher,
-  was promoted to `drawer_organizer.scad`, replacing the older nested-dropdown version; `PhoneHolder (2).scad`,
-  confirmed an abandoned early draft for a different phone, was deleted). If a new `(N)`-suffixed or
-  ambiguously/generically-named file shows up, don't assume which copy is canonical or delete anything without
-  checking — compare content and ask, the same way these were resolved.
+- **Project folder naming**: every part lives at `openscad-projects/<PartName>/`, and the **folder name**
+  is what must say what the part actually generates (`openscad-projects/KeyCap/`, not
+  `openscad-projects/customizer/`; `StaplerTop`, not `stapler_customizer`) — not its origin, a leftover
+  download name, or a vague catch-all/suffix. Rename the folder on sight if it doesn't say what it makes.
+  The source file inside is always `src/main.scad` regardless of part name — that's the skill's own
+  Design-mode scaffold shape (see "OpenSCAD skill" below), not a naming violation; the folder carries the
+  identity, the filename is just the generic entry point. No duplicate/`(N)`-suffixed folders either — as
+  of Aug 2026 there are none; a prior pass resolved the two that existed (a `drawer_organizer (1).scad`,
+  confirmed functionally identical to the original's geometry modules with a cleaner Customizer
+  dispatcher, was promoted to replace the older nested-dropdown version; a `PhoneHolder (2).scad`,
+  confirmed an abandoned early draft for a different phone, was deleted — both predate the per-folder
+  reorganization). If a new `(N)`-suffixed or ambiguously/generically-named folder shows up, don't assume
+  which copy is canonical or delete anything without checking — compare content and ask, the same way
+  these were resolved.
 
 ## OpenSCAD skill
 

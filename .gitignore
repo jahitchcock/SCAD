@@ -4,5 +4,5 @@ debug.log
 .claude/settings.local.json
 
 # Contains PII (pet/owner identifying info) — keep local, never commit
-DogTag.scad
-PetID_Pro.scad
+/openscad-projects/DogTag/
+/openscad-projects/PetID_Pro/
