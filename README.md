@@ -11,6 +11,7 @@ custom modules, except where a part explicitly `use`s one (e.g. `CustomizableWal
 
 | Project | What it is |
 |---|---|
+| [`Benchy`](openscad-projects/Benchy/README.md) | Official 3DBenchy as exact mesh data with parametric hull/cabin/chimney warps (identical to the STL at defaults) |
 | [`CornerShelf`](openscad-projects/CornerShelf/src/main.scad) | Corner-mounted shelf |
 | [`CustomizableWallPlate`](openscad-projects/CustomizableWallPlate/src/main.scad) | Parametric wall plate |
 | [`Customizable_Card_Box`](openscad-projects/Customizable_Card_Box/src/main.scad) | Card storage box |
