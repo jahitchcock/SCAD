@@ -181,6 +181,20 @@ Z=25-27: Bodies interrupted                → Counterbore pockets at this depth
 - Countersink (conical taper): `cylinder(d1=cs_d, d2=hole_d, h=cs_depth)`
 - Most 3D-printed parts use counterbores.
 
+**Hole orientation** — brackets often have holes on several faces, each set with its own spacing
+and count: bottom face → vertical (Z) holes; angled faces → perpendicular to the face (rotate by
+the taper angle); side walls → horizontal (Y) holes. Take positions from SVG centroids at the
+matching slice level.
+
+**Extracted profile → OpenSCAD** — inner contours become extra `paths` entries; features that vary
+along the extrusion axis (holes, counterbores) show up as slices with more holes than the dominant
+profile, and are subtracted as cylinders:
+```openscad
+linear_extrude(height = extrusion_length)
+    polygon(points = [/* extracted points */],
+            paths  = [outer_boundary, hole_1, hole_2]);
+```
+
 **Taper/wedge subtraction** (narrowing a wing from full to reduced width):
 ```openscad
 hull() {
